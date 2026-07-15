@@ -1,6 +1,6 @@
 const app = document.getElementById("app");
 
-function buildTree(value) {
+function buildTree(value, depth = 0) {
     if (value === null) {
         const span = document.createElement("span");
         span.className = "json-null";
@@ -68,7 +68,7 @@ function buildTree(value) {
             li.appendChild(document.createTextNode(": "));
         }
 
-        li.appendChild(buildTree(val));
+        li.appendChild(buildTree(val, depth + 1));
 
         if (i < entries.length - 1) {
             li.appendChild(document.createTextNode(","));
@@ -79,6 +79,11 @@ function buildTree(value) {
 
     // Closing bracket
     const closeBracket = document.createTextNode(close);
+
+    if (depth > 0) {
+        wrapper.classList.add("json-collapsed");
+        toggle.textContent = "▶";
+    }
 
     toggle.addEventListener("click", () => {
         const collapsed = wrapper.classList.toggle("json-collapsed");
@@ -121,4 +126,22 @@ function fetchAndDisplay() {
 
 fetchAndDisplay();
 
-browser.devtools.network.onNavigated.addListener(fetchAndDisplay);
+// onNavigated only fires on full page loads; SPAs use history.pushState which
+// doesn't trigger a network navigation. Poll the Inertia component name instead.
+let lastComponent = null;
+
+setInterval(() => {
+    browser.devtools.inspectedWindow.eval(
+        "window.history.state && window.history.state.page && window.history.state.page.component"
+    ).then(([component]) => {
+        if (component && component !== lastComponent) {
+            lastComponent = component;
+            fetchAndDisplay();
+        }
+    });
+}, 500);
+
+browser.devtools.network.onNavigated.addListener(() => {
+    lastComponent = null;
+    fetchAndDisplay();
+});
