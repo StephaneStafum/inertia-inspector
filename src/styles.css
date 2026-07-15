@@ -1,0 +1,110 @@
+:root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --fg-muted: #666666;
+    --key: #881391;
+    --string: #c41a16;
+    --number: #1c00cf;
+    --bool-null: #0d22aa;
+    --toggle-color: #aaaaaa;
+    --toggle-hover: #555555;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1e1e1e;
+        --fg: #d4d4d4;
+        --fg-muted: #888888;
+        --key: #9cdcfe;
+        --string: #ce9178;
+        --number: #b5cea8;
+        --bool-null: #569cd6;
+        --toggle-color: #666666;
+        --toggle-hover: #aaaaaa;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 16px;
+    font-family: system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 14px;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#app {
+    font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+#app em {
+    font-family: system-ui, sans-serif;
+    color: var(--fg-muted);
+}
+
+/* JSON tree */
+.json-tree {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.json-tree li {
+    padding-left: 18px;
+    position: relative;
+}
+
+.json-key {
+    color: var(--key);
+}
+
+.json-string {
+    color: var(--string);
+}
+
+.json-number {
+    color: var(--number);
+}
+
+.json-bool,
+.json-null {
+    color: var(--bool-null);
+}
+
+.json-toggle {
+    display: inline-block;
+    width: 14px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--toggle-color);
+    user-select: none;
+    margin-left: -16px;
+    margin-right: 2px;
+}
+
+.json-toggle:hover {
+    color: var(--toggle-hover);
+}
+
+.json-collapsed > ul,
+.json-collapsed > ol {
+    display: none;
+}
+
+.json-collapsed .json-placeholder {
+    display: inline;
+}
+
+.json-placeholder {
+    display: none;
+    color: var(--fg-muted);
+}

@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "Inertia inspector",
+  "version": "0.1.0",
+  "description": "Inspect Inertia.js page state.",
+
+  "devtools_page": "src/devtools.html",
+
+  "permissions": [
+    "<all_urls>"
+  ]
+}
