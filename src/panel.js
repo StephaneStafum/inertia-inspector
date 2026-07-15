@@ -43,7 +43,7 @@ function buildTree(value) {
     // Toggle button
     const toggle = document.createElement("span");
     toggle.className = "json-toggle";
-    toggle.textContent = "▾";
+    toggle.textContent = "▼";
 
     // Opening bracket
     const openBracket = document.createTextNode(open);
@@ -82,12 +82,30 @@ function buildTree(value) {
 
     toggle.addEventListener("click", () => {
         const collapsed = wrapper.classList.toggle("json-collapsed");
-        toggle.textContent = collapsed ? "▸" : "▾";
+        toggle.textContent = collapsed ? "▶" : "▼";
+    });
+
+    // Copy button
+    const copyBtn = document.createElement("button");
+    copyBtn.className = "json-copy";
+    copyBtn.textContent = "⎘";
+    copyBtn.title = "Copier le JSON";
+    copyBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(JSON.stringify(value, null, 2)).then(() => {
+            copyBtn.textContent = "✓";
+            copyBtn.classList.add("json-copy--done");
+            setTimeout(() => {
+                copyBtn.textContent = "⎘";
+                copyBtn.classList.remove("json-copy--done");
+            }, 1500);
+        });
     });
 
     wrapper.appendChild(toggle);
     wrapper.appendChild(openBracket);
     wrapper.appendChild(placeholder);
+    wrapper.appendChild(copyBtn);
     wrapper.appendChild(list);
     wrapper.appendChild(closeBracket);
 
