@@ -4,6 +4,13 @@
   "version": "0.1.0",
   "description": "Inspect Inertia.js page state.",
 
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "inertia_inspector@mecontacter.net",
+      "strict_min_version": "109.0"
+    }
+  },
+
   "devtools_page": "src/devtools.html",
 
   "permissions": [
